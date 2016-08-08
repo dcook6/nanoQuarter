@@ -9,9 +9,9 @@
 */
 
 module PC_adder(
-	input [31:0] PC,
-	output [31:0] PCplus4);
+	input [15:0] PC,
+	output [15:0] PCplus2);
 	
-	assign PCplus4 = PC + 4;
+	assign PCplus2 = PC + 2;
 	
 endmodule
