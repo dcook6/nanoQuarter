@@ -10,14 +10,14 @@
 
 module Data_Memory(
 	input clk, MemRead, MemWrite,
-	input [31:0] ALUout, reg2data,
-	output reg [31:0] memout);
+	input [15:0] ALUout, reg2data,
+	output reg [15:0] memout);
 	
-	reg [31:0] memory[199:0];
+	reg [15:0] memory[199:0];
 	
 	initial begin
-		memory[8] = 32'b11110000111100001111000011110000;
-		memory[10] = 32'b0000000000000000000000000000101;
+		memory[4] = 16'b1100110011001100;
+		memory[6] = 16'b0000000000000011;
 	end
 	
 	always @ (ALUout, MemRead)
