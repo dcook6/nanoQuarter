@@ -10,7 +10,7 @@
 
 module shift_left_two (
 	input[15:0] signex,
-	output[15:0] Boff);/
+	output[15:0] Boff);
 	
 	assign Boff = signex << 2;
 	
