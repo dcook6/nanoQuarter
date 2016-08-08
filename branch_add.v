@@ -9,10 +9,10 @@
 */
 
 module branch_add (
-	input[31:0] PCplus4, Boff,
-	output[31:0] BAout);
+	input[15:0] PCplus2, Boff,
+	output[15:0] BAout);
 	
-	assign BAout = PCplus4 + Boff;
+	assign BAout = PCplus2 + Boff;
 	
 endmodule
 
