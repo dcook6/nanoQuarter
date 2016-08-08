@@ -8,10 +8,10 @@
 	Output: out_value
 */
 
-module thirtytwo_bit_mux(
+module sixteen_bit_mux(
 	input select, 
-	input[31:0] zero_value, one_value,
-	output reg [31:0] out_value);
+	input[15:0] zero_value, one_value,
+	output reg [15:0] out_value);
 	
 	always @ (select, zero_value, one_value)
 		begin
