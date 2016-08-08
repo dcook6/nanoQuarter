@@ -10,8 +10,8 @@
 
 module PC(
 	input clk, reset,
-	input[31:0] newPC,
-	output reg[31:0] PC);
+	input[15:0] newPC,
+	output reg[15:0] PC);
 	
 	always @ (posedge clk or posedge reset)
 		begin
