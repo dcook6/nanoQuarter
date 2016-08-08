@@ -9,9 +9,9 @@
 */
 
 module jump_calc(
-	input[3:0] PCbits, 
-	input[25:0] instbits,
-	output[31:0] JumpAdrs);
+	input[2:0] PCbits, 
+	input[7:0] instbits,
+	output[15:0] JumpAdrs);
 	
 	assign JumpAdrs = {PCbits, instbits, 2'b00};
 
