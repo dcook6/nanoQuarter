@@ -10,11 +10,11 @@
 
 module registers(
 	input RegWrite, clk, 
-	input[4:0] reg1ad, reg2ad, writead, 
-	input[31:0] data_in, 
-	output wire [31:0] reg1data, reg2data);
+	input[2:0] reg1ad, reg2ad, writead, 
+	input[15:0] data_in, 
+	output wire [15:0] reg1data, reg2data);
 	
-	reg[31:0] register[31:0];
+	reg[15:0] register[15:0];
 	
 	initial begin register[0] = 0; end
 	
