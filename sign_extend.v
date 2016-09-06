@@ -11,7 +11,7 @@
 module sign_extend(
 	input ui, 
 	input[15:0] inst, 
-	output reg [31:0] signex);
+	output reg [16:0] signex);
 	
 	always @ (ui, inst)
 		begin
