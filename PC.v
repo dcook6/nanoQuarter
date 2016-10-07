@@ -1,23 +1,25 @@
 /*
-	Name: Derek Cook
-	Class: CS 4480 - Computer Architecture and Design
-	Instructor: Dr. Charlie Wang
-	Project: 32-bit Single Cycle Processor
-	Description: Create the PC portion of the Processor
-	intput: newPC, clk, reset
-	Output: PC
+* 	Nathan Chinn
+* 	Minion CPU - NanoQuarter
+*
+*	Module:  Program Counter
+*	Inputs:  clock, reset, new PC
+*	Outputs: Program Counter
+*
 */
 
-module PC(
-	input clk, reset,
-	input[15:0] newPC,
-	output reg[15:0] PC);
-	
-	always @ (posedge clk or posedge reset)
-		begin
-			if (reset == 1)
-				PC <= 0;
-			else 
-				PC <= newPC;
-		end
+module PC( input 		clk, // System Clock
+		 		rst, // System Reset
+	   input[31:0] 		new_PC, // PC in 
+
+	   output reg[31:0] 	PC_out //PC out
+	 );
+
+	 always @ (posedge clk or posedge rst)
+	 begin
+		if (rst == 1)
+			PC_out = 0;
+		else
+			PC_out = new_PC;
+	 end
 endmodule

@@ -1,28 +1,40 @@
+
 /*
-	Name: Derek Cook
-	Class: CS 4480 - Computer Architecture and Design
-	Instructor: Dr. Charlie Wang
-	Project: 32-bit Single Cycle Processor
-	Description: Create the registers
-	Input: RegWrite, clk, reg1ad, reg2ad, writead, data_in
-	Output: reg1data, reg2data
+* 	Nathan Chinn
+* 	Minion CPU - NanoQuarter
+*
+*	Module:  Registers Module
+*	Inputs:  register source 1, register source 2
+*		 register destination, Data in, Write Protect Bar
+*	Outputs: register 1 data, register 2 data
+*
 */
 
-module registers(
-	input RegWrite, clk, 
-	input[2:0] reg1ad, reg2ad, writead, 
-	input[15:0] data_in, 
-	output wire [15:0] reg1data, reg2data);
-	
-	reg[15:0] register[15:0];
-	
-	initial begin register[0] = 0; end
-	
-	assign reg1data = register[reg1ad]; // read
-	assign reg2data = register[reg2ad];
-	
-	always @ (posedge clk) // write
+module Registers(	input 			clk,	 // System Clock
+						rst,	 // System Reset
+			input[2:0] 		rs1,	 // register source 1
+						rs2,	 // register source 2
+						rd,	 // register destination
+			input[15:0]		data_in, // data to be writen to rd
+			input			wp_,	 // Write Protect Bar (1 means write ok)
+
+			output wire[15:0]	reg1data,
+						reg2data
+		);
+
+		reg [3:0] registers[15:0]; // 8 16 bit registers
+		reg [3:0] rd_last; // last destination register
+		
+		assign reg1data = registers[rs1]; // pass through
+		assign reg2data = registers[rs2]; // pass through
+
+		always @ (posedge clk)
 		begin
-			if (RegWrite == 1) register[writead] <= data_in;
+			if (wp_ == 1)
+				registers[rd_last] = data_in;
+			rd_last = rd;
 		end
+
+
 endmodule
+			

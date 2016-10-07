@@ -1,18 +1,24 @@
 /*
-	Name: Derek Cook
-	Class: CS 4480 - Computer Architecture and Design
-	Instructor: Dr. Charlie Wang
-	Project: 32-bit Single Cycle Processor
-	Description: Create a branch adder
-	Input: PCplus4, Boff
-	Output: BAout
+* 	Nathan Chinn
+* 	Minion CPU - NanoQuarter
+*
+*	Module:  Branch Adder
+*	Inputs:  Next PC, bne flag, branch offset
+*	Outputs: Bsel PC after branch selection
+*	
 */
 
-module branch_add (
-	input[15:0] PCplus2, Boff,
-	output[15:0] BAout);
-	
-	assign BAout = PCplus2 + Boff;
-	
-endmodule
+module PCNIMUX(	input[4:0]		boff,   // Jump address
+		input[31:0]		PC_n,	// next Program Counter
+		input			bne,	// branch Flag
+		output reg[31:0]	bsel	// Next Instruction Program Counter	
+	  );
 
+	always @(*)
+	begin
+		if (bne == 1)
+			bsel = PC_n - 2 + boff;	
+		else
+			bsel = PC_n;
+	end
+endmodule
