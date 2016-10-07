@@ -9,7 +9,7 @@
 *	Note: This works to solve a 1 clock cycle latency in APB
 */
 
-module ALUControl(	input 			clk, 	// System Clock
+module PrefetchBuffer(	input 			clk, 	// System Clock
 						rst, 	// System Reset
 			input[15:0]		inst1,	// Instruction 1
 			input[15:0]		inst2,	// Instruction 2

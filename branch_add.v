@@ -8,10 +8,10 @@
 *	
 */
 
-module PCNIMUX(	input[4:0]		boff,   // Jump address
-		input[31:0]		PC_n,	// next Program Counter
-		input			bne,	// branch Flag
-		output reg[31:0]	bsel	// Next Instruction Program Counter	
+module BranchAdd(	input[4:0]		boff,   // Jump address
+			input[31:0]		PC_n,	// next Program Counter
+			input			bne,	// branch Flag
+			output reg[31:0]	bsel	// Next Instruction Program Counter	
 	  );
 
 	always @(*)
