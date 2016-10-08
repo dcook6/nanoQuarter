@@ -20,16 +20,37 @@ module StallUnit(	input		clk,	// System Clock
 			output reg		stall_flg // Flag set high when stall required
 		);
 	reg[2:0] rd_last;
+	reg	 clear_stall;
 
-	always @ (posedge clk)
+	always @ (posedge clk or posedge rst)
 	begin
-		stall_flg = 0;
-		pc_new = pc_old;
+		if(rst == 1)
+		begin
+			clear_stall = 0;
+			rd_last = 3'b000;
+		end
 
-		if(rd_last == rs1 || rd_last == rs2)
-			stall_flg = 1;
+		else
+		begin
+			stall_flg = 0;
+			pc_new = pc_old;
+			
+			if(clear_stall == 0)
+			begin
+				if(rd_last == rs1 || rd_last == rs2)
+				begin
+					stall_flg = 1;
+					clear_stall = 1;
+				end
+			end
+			else
+			begin
+				stall_flg = 0;
+				clear_stall = 0;
+			end
 
-		rd_last = rd;
+			rd_last = rd;
+		end
 	end
 endmodule
 			
