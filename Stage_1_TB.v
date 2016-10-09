@@ -35,6 +35,7 @@ module Stage1_TB();
     wire[2:0]		ALUfunct_out;
 		wire		jr_out;		
 	
+	reg[7:0] error_count;
 
 	Stage1 test(	
 			.clk(clk),
@@ -63,15 +64,13 @@ module Stage1_TB();
 		$dumpfile("Main_Control_TB.vcd");
 		$dumpvars(0, MainControl_TB);
 		error_count = 0;
-		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b000;
-			flg_test  = 5'b0_0_0_0_0;
-			message = "Line51: reg1data";
-			#5 check_output( flg_test, message);
-		
-		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b001;
-			flg_test  = 5'b0_0_0_0_0;
-			message = "Line 42: XOR Operation";
-			#5 check_output( flg_test, message);
+
+
+		#10	reg1data_in = 16'b0000_0000_0000_0000;	reg2data_in = 16'b0000_0000_0000_0000;
+			jtarget_in  =  8'b0000_0000;		memaddr_in  =  6'b  00_0000;
+			boffset_in  =  5'b   0_0000;            funct_in    =  3'b 000;
+			ALUfunct_in =  3'b 000;			jr_in	    =  0;
+
 
 		$display("Finished Main_Control_TB Test Bench Error Count: %d", error_count);	
 		#5 $finish;
