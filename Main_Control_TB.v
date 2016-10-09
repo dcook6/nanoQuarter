@@ -34,7 +34,12 @@ module MainControl_TB();
 		error_count = 0;
 		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b000;
 			flg_test  = 5'b0_0_0_0_0;
-			message = "Shift Right Arithmetic Operation";
+			message = "Line37: NAND Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b001;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 42: XOR Operation";
 			#5 check_output( flg_test, message);
 
 		$display("Finished Main_Control_TB Test Bench Error Count: %d", error_count);	
