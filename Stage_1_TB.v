@@ -15,7 +15,7 @@
 module Stage1_TB();
   
     reg 			clk;
-		reg 	 		rst;
+	reg 	 		rst;
 
     reg[15:0]		reg1data_in,	
 			       		reg2data_in;	
@@ -36,10 +36,27 @@ module Stage1_TB();
 		wire		jr_out;		
 	
 
-	Stage1 test(	.opcode(opcode),	.funct(funct),
-				.stall_flg(stall_flg),	.jmp_flg(jmp_flg),
-				.nop_flg(nop_flg),	.brnch_flg(brnch_flg),
-				.memRd_flg(memRd_flg),	.memWrt_flg(memWrt_flg)
+	Stage1 test(	
+			.clk(clk),
+			.rst(rst),
+
+			.reg1data_in(reg1data_in),	
+			.reg2data_in(reg2data_in),	
+			.jtarget_in(jtarget_in),
+			.memaddr_in(memaddr_in),
+			.boffset_in(boffset_in),
+			.funct_in(funct_in),
+			.ALUfunct_in(ALUfunct_in),
+			.jr_in(jr_in),
+
+			.reg1data_out(reg1data_out),
+			.reg2data_out(reg2data_out),
+			.jtarget_out(jtarget_out),
+			.memaddr_out(memaddr_out),
+			.boffset_out(boffset_out),
+			.funct_out(funct_out),
+			.ALUfunct_out(ALUfunct_out),
+			.jr_out(jr_out)
 			);	
 	
 	initial begin
