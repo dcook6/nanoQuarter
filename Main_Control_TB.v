@@ -1,5 +1,5 @@
 /*
-* 	Nathan Chinn
+* 	Rebekah Tomsick - Nathan Chinn
 * 	Minion CPU - NanoQuarter
 *
 *	Module:  Main Control
