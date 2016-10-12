@@ -41,6 +41,56 @@ module MainControl_TB();
 			flg_test  = 5'b0_0_0_0_0;
 			message = "Line 42: XOR Operation";
 			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b010;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 47: SLL Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b011;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 52: SRL Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b100;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 57: SRA Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b101;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 62: ADD Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b110;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 67: SUB Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b00;	funct = 3'b111;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 72: SW Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b01;	funct = 3'b000;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 77: LW Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b01;	funct = 3'b001;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 82: LB Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 0;	opcode = 2'b01;	funct = 3'b010;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 87: SB Operation";
+			#5 check_output( flg_test, message);
+		
+		#5 	stall_flg = 1;	opcode = 2'b00;	funct = 3'b000;
+			flg_test  = 5'b0_0_0_0_0;
+			message = "Line 92: NAND Operation";
+			#5 check_output( flg_test, message);
 
 		$display("Finished Main_Control_TB Test Bench Error Count: %d", error_count);	
 		#5 $finish;
