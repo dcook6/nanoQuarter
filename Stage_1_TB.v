@@ -61,34 +61,34 @@ module Stage1_TB();
 			);	
 	
 	initial begin
-		$dumpfile("Main_Control_TB.vcd");
-		$dumpvars(0, MainControl_TB);
-		error_count = 0;
+		$dumpfile("Stage_1_TB.vcd");
+		$dumpvars(0, Stage1_TB);
+		error_count = 0; clk = 0; rst = 0;
 
 
 		#10	reg1data_in = 16'b0000_0000_0000_0000;	reg2data_in = 16'b0000_0000_0000_0000;
 			jtarget_in  =  8'b0000_0000;		memaddr_in  =  6'b00_0000;
-			boffset_in  =  5'b0_0000;            funct_in    =  3'b000;
+			boffset_in  =  5'b0_0000;            	funct_in    =  3'b000;
 			ALUfunct_in =  3'b000;			jr_in	    =  0;
 
 		#10	reg1data_in = 16'b0000_0000_0000_1000;	reg2data_in = 16'b1000_0000_0000_0000;
 			jtarget_in  =  8'b0000_0010;		memaddr_in  =  6'b11_0000;
-			boffset_in  =  5'b1_0000;            funct_in    =  3'b001;
+			boffset_in  =  5'b1_0000;            	funct_in    =  3'b001;
 			ALUfunct_in =  3'b101;			jr_in	    =  1;
 		
 		#10	reg1data_in = 16'b0000_0000_1000_0000;	reg2data_in = 16'b0000_1000_0000_0000;
 			jtarget_in  =  8'b0000_1000;		memaddr_in  =  6'b00_1100;
-			boffset_in  =  5'b0_1000;            funct_in    =  3'b010;
+			boffset_in  =  5'b0_1000;            	funct_in    =  3'b010;
 			ALUfunct_in =  3'b100;			jr_in	    =  0;
 		
 		#10	reg1data_in = 16'b0000_1000_0000_0000;	reg2data_in = 16'b0000_0000_1000_0000;
 			jtarget_in  =  8'b0010_0000;		memaddr_in  =  6'b00_0011;
-			boffset_in  =  5'b0_0100;            funct_in    =  3'b100;
+			boffset_in  =  5'b0_0100;            	funct_in    =  3'b100;
 			ALUfunct_in =  3'b010;			jr_in	    =  1;
 		
 		#10	reg1data_in = 16'b1000_0000_0000_0000;	reg2data_in = 16'b0000_0000_0000_1000;
 			jtarget_in  =  8'b1000_0000;		memaddr_in  =  6'b10_0001;
-			boffset_in  =  5'b0_0010;            funct_in    =  3'b101;
+			boffset_in  =  5'b0_0010;            	funct_in    =  3'b101;
 			ALUfunct_in =  3'b001;			jr_in	    =  0;
 		
 
