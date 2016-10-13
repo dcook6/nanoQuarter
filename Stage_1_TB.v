@@ -67,10 +67,30 @@ module Stage1_TB();
 
 
 		#10	reg1data_in = 16'b0000_0000_0000_0000;	reg2data_in = 16'b0000_0000_0000_0000;
-			jtarget_in  =  8'b0000_0000;		memaddr_in  =  6'b  00_0000;
-			boffset_in  =  5'b   0_0000;            funct_in    =  3'b 000;
-			ALUfunct_in =  3'b 000;			jr_in	    =  0;
+			jtarget_in  =  8'b0000_0000;		memaddr_in  =  6'b00_0000;
+			boffset_in  =  5'b0_0000;            funct_in    =  3'b000;
+			ALUfunct_in =  3'b000;			jr_in	    =  0;
 
+		#10	reg1data_in = 16'b0000_0000_0000_1000;	reg2data_in = 16'b1000_0000_0000_0000;
+			jtarget_in  =  8'b0000_0010;		memaddr_in  =  6'b11_0000;
+			boffset_in  =  5'b1_0000;            funct_in    =  3'b001;
+			ALUfunct_in =  3'b101;			jr_in	    =  1;
+		
+		#10	reg1data_in = 16'b0000_0000_1000_0000;	reg2data_in = 16'b0000_1000_0000_0000;
+			jtarget_in  =  8'b0000_1000;		memaddr_in  =  6'b00_1100;
+			boffset_in  =  5'b0_1000;            funct_in    =  3'b010;
+			ALUfunct_in =  3'b100;			jr_in	    =  0;
+		
+		#10	reg1data_in = 16'b0000_1000_0000_0000;	reg2data_in = 16'b0000_0000_1000_0000;
+			jtarget_in  =  8'b0010_0000;		memaddr_in  =  6'b00_0011;
+			boffset_in  =  5'b0_0100;            funct_in    =  3'b100;
+			ALUfunct_in =  3'b010;			jr_in	    =  1;
+		
+		#10	reg1data_in = 16'b1000_0000_0000_0000;	reg2data_in = 16'b0000_0000_0000_1000;
+			jtarget_in  =  8'b1000_0000;		memaddr_in  =  6'b10_0001;
+			boffset_in  =  5'b0_0010;            funct_in    =  3'b101;
+			ALUfunct_in =  3'b001;			jr_in	    =  0;
+		
 
 		$display("Finished Main_Control_TB Test Bench Error Count: %d", error_count);	
 		#5 $finish;
@@ -79,7 +99,7 @@ module Stage1_TB();
   always
     #5 clk = ~clk;
   
-	task check_output( 	input[4:0] concat_flg,
+	/*task check_output( 	input[4:0] concat_flg,
 				input[255:0] message);
 		if(concat_flg !== {test.jmp_flg, test.brnch_flg, test.nop_flg, test.memRd_flg, test.memWrt_flg})
 		begin
@@ -89,6 +109,6 @@ module Stage1_TB();
 			$display("Testbench:\t %b", concat_flg);
 			$display("Message: %s\n", message);
 		end
-	endtask
+	endtask*/
 
 endmodule
