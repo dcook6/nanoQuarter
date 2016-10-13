@@ -73,12 +73,12 @@ module MainControl_TB();
 			#5 check_output( flg_test, message);
 		
 		#5 	stall_flg = 0;	opcode = 2'b01;	funct = 3'b000;
-			flg_test  = 5'b0_0_0_0_0;
+			flg_test  = 5'b0_0_0_1_0;
 			message = "Line 77: LW Operation";
 			#5 check_output( flg_test, message);
 		
 		#5 	stall_flg = 0;	opcode = 2'b01;	funct = 3'b001;
-			flg_test  = 5'b0_0_0_0_0;
+			flg_test  = 5'b0_0_0_1_0;
 			message = "Line 82: LB Operation";
 			#5 check_output( flg_test, message);
 		
@@ -88,7 +88,7 @@ module MainControl_TB();
 			#5 check_output( flg_test, message);
 		
 		#5 	stall_flg = 1;	opcode = 2'b00;	funct = 3'b000;
-			flg_test  = 5'b0_0_0_0_0;
+			flg_test  = 5'b0_0_1_0_0;
 			message = "Line 92: NAND Operation";
 			#5 check_output( flg_test, message);
 
