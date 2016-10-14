@@ -38,12 +38,12 @@ module StallUnit_TB();
 		rs1 = 3'b001;	rs2 = 3'b010;	rd = 3'b011;	opcode=2'b00;
 		error_count = 0;
 
-		#5 	rs1 = 3'b001;	rs2 = 3'b010;	rd = 3'b011;	opcode=2'b00;
+		//#5 	rs1 = 3'b001;	rs2 = 3'b010;	rd = 3'b011;	opcode=2'b00;
 
 		#5 	rs1 = 3'b001;	rs2 = 3'b010;	rd = 3'b011;	opcode=2'b00;
 			stall_flg_test = 0;	
-			message = "RD_Last = 011, source errors present rs1";
-			check_stall_flg( stall_flg_test, message);
+			message = "Line 45: No Stall";
+			#5 check_stall_flg( stall_flg_test, message);
 
 		//#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b001;	opcode=2'b00;
 		//	stall_flg_test = 1;	
@@ -51,19 +51,19 @@ module StallUnit_TB();
 		//	check_stall_flg( stall_flg_test, message);
 
 		#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b010;	opcode=2'b00;
-			stall_flg_test = 0;	
-			message = "RD_Last = 001, no Source Errors Present";
-			check_stall_flg( stall_flg_test, message);
-
-		#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b010;	opcode=2'b00;
 			stall_flg_test = 1;	
-			message = "RD_Last = 010, source Errors Present";
-			check_stall_flg( stall_flg_test, message);
+			message = "Line 55: Stall Detected";
+			#5 check_stall_flg( stall_flg_test, message);
 
 		#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b010;	opcode=2'b00;
 			stall_flg_test = 0;	
-			message = "RD_Last = 010, Stalled System should be free";
-			check_stall_flg( stall_flg_test, message);
+			message = "Line 60: Stall Fixed";
+			#5 check_stall_flg( stall_flg_test, message);
+
+		#5 	rs1 = 3'b011;	rs2 = 3'b000;	rd = 3'b010;	opcode=2'b00;
+			stall_flg_test = 0;	
+			message = "Line 65: No Stall";
+			#5 check_stall_flg( stall_flg_test, message);
 
 
 		#15 $display("Finished Stall_Unit Test Bench. Error Count: %d", error_count);
