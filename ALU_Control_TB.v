@@ -2,7 +2,7 @@
 
 */
 
-module ALUControl_tb();
+module ALUControl_TB();
 reg [15:0] inst;
 wire[2:0] func;
 wire[1:0] shamt;
