@@ -45,24 +45,25 @@ module StallUnit_TB();
 			message = "Line 45: No Stall";
 			#5 check_stall_flg( stall_flg_test, message);
 
-		//#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b001;	opcode=2'b00;
-		//	stall_flg_test = 1;	
-		//	message = "RD_Last = 011, source errors present rs1";
-		//	check_stall_flg( stall_flg_test, message);
 
 		#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b010;	opcode=2'b00;
 			stall_flg_test = 1;	
-			message = "Line 55: Stall Detected";
+			message = "Line 51: Stall Detected";
 			#5 check_stall_flg( stall_flg_test, message);
 
 		#5 	rs1 = 3'b011;	rs2 = 3'b010;	rd = 3'b010;	opcode=2'b00;
 			stall_flg_test = 0;	
-			message = "Line 60: Stall Fixed";
+			message = "Line 56: Stall Fixed";
 			#5 check_stall_flg( stall_flg_test, message);
 
 		#5 	rs1 = 3'b011;	rs2 = 3'b000;	rd = 3'b010;	opcode=2'b00;
 			stall_flg_test = 0;	
-			message = "Line 65: No Stall";
+			message = "Line 61: No Stall";
+			#5 check_stall_flg( stall_flg_test, message);
+
+		#5 	rs1 = 3'b101;	rs2 = 3'b100;	rd = 3'b110;	opcode=2'b00;
+			stall_flg_test = 0;	
+			message = "Line 66: No Stall";
 			#5 check_stall_flg( stall_flg_test, message);
 
 
