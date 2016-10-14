@@ -22,7 +22,7 @@ module Registers(	input 			clk,	 // System Clock
 						reg2data
 		);
 
-		reg [3:0] registers[15:0]; // 8 16 bit registers
+		reg [2:0] registers[15:0]; // 8 16 bit registers
 		reg [3:0] rd_last; // last destination register
 		
 		assign reg1data = registers[rs1]; // pass through
