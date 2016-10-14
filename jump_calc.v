@@ -21,7 +21,7 @@ module JumpCalc( input[15:0]		reg1data,	// Register 1 data
 	begin
 		case (funct)
 			JMP: jaddr = jtarget;
-			JR : jaddr = reg1data;
+			JR : jaddr = reg1data[10:3];
 			default: jaddr = 0;
 		endcase
 	end
