@@ -14,23 +14,20 @@ module PrefetchBuffer(	input 			clk, 	// System Clock
 			input[15:0]		inst1,	// Instruction 1
 			input[15:0]		inst2,	// Instruction 2
 			input			wp_,	// Write Protect Bar
-			output wire[15:0]	inst	// function	
-	  );
-	reg[1:0] instructions [15:0];
-	reg count;
 
-	assign inst = instructions[count];
+			output reg[15:0]	inst	// function	
+	  );
+
+	reg[15:0]	inst_mem;
+	
 	always @(posedge clk)
 	begin
-		if (wp_ == 1)
-		begin
-			instructions[0] = inst1; // load prefetch buffer
-			instructions[1] = inst2; 
-			count = 0;
-		end	
-		else
-		begin
-			count = 1;
+		if(wp_ === 1)
+		begin 
+			inst		= inst1;
+			inst_mem 	= inst2;
 		end
+		else
+			inst	= inst_mem;
 	end
 endmodule

@@ -8,7 +8,7 @@
 *	
 */
 
-module PCNIMUX(	input[7:0]		jaddr,  // Jump address
+module PCNIMUX(	input[15:0]		jaddr,  // Jump address
 		input[31:0]		bsel,	// Program Counter from Branch Selection
 		input			jmp,	// Jump Flag
 		output reg[31:0]	PCNI	// Next Instruction Program Counter	
