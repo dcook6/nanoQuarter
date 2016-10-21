@@ -30,14 +30,14 @@ module ALU(	input[1:0]		op,    		// Operation Code for decode
 	always @(*)
 	begin
 		case ({op,funct})
-			NAND:	ALUout = (reg1data ~& reg2data);
+			NAND:	ALUout = ~(reg1data & reg2data);
 			XOR:	ALUout = (reg1data ^  reg2data);
-			SLL:	ALUout = (reg1data << reg2data);
-			SRL:	ALUout = (reg1data >> reg2data);
-			SRA:	ALUout = (reg1data >> reg2data);
+			SLL:	ALUout = (reg1data << reg2data); //shamt needs to be included in the equation
+			SRL:	ALUout = (reg1data >> reg2data); 
+			SRA:	ALUout = (reg1data >> reg2data); //needs to be changed
 			ADD:	ALUout = (reg1data +  reg2data);
 			SUB:	ALUout = (reg1data -  reg2data);
-			default:ALUout = 0;
+			default:ALUout = 5'bxx_xxx; // don't care...not zero. This will save space
 		endcase
 
 	end
