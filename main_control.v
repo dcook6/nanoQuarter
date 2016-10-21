@@ -37,6 +37,9 @@ module MainControl( 	input	   stall_flg,
 			iType:
 				begin
 					if (funct >= rdWrtJnct) memRd_flg = 0; memWrt_flg = 1;
+				end
+			
+				begin
 					if (funct <  rdWrtJnct) memRd_flg = 1; memWrt_flg = 0;
 				end
 			jType:
