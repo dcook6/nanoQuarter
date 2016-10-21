@@ -15,7 +15,7 @@ module PC( input 		clk, // System Clock
 	   output reg[31:0] 	PC_out //PC out
 	 );
 
-	 always @ (posedge clk or posedge rst)
+	always @ (posedge clk or posedge rst) //needs non blocking <=
 	 begin
 		if (rst == 1)
 			PC_out = 0;
