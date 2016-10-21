@@ -14,11 +14,11 @@ module BranchAdd(	input[4:0]		boff,   // Jump address
 			output reg[31:0]	bsel	// Next Instruction Program Counter	
 	  );
 
-	always @(*)
+	always @(*) //non blocking statemenets
 	begin
 		if (bne == 1)
-			bsel = PC_n - 2 + boff;	
+			bsel <= PC_n - 2 + boff;	
 		else
-			bsel = PC_n;
+			bsel <= PC_n;
 	end
 endmodule
