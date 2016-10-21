@@ -22,34 +22,34 @@ module StallUnit(	input		clk,	// System Clock
 	reg[2:0] rd_last;
 	reg	 clear_stall;
 
-	always @ (posedge clk or posedge rst)
+	always @ (posedge clk or posedge rst) //non blocking statements added
 	begin
 		if(rst == 1)
 		begin
-			clear_stall = 0;
-			rd_last = 3'b000;
+			clear_stall <= 0;
+			rd_last <= 3'b000;
 		end
 
 		else
 		begin
-			stall_flg = 0;
-			pc_new = pc_old;
+			stall_flg <= 0;
+			pc_new <= pc_old;
 			
 			if(clear_stall == 0)
 			begin
 				if(rd_last == rs1 || rd_last == rs2)
 				begin
-					stall_flg = 1;
-					clear_stall = 1;
+					stall_flg <= 1;
+					clear_stall <= 1;
 				end
 			end
 			else
 			begin
-				stall_flg = 0;
-				clear_stall = 0;
+				stall_flg <= 0;
+				clear_stall <= 0;
 			end
 
-			rd_last = rd;
+			rd_last <= rd;
 		end
 	end
 endmodule
