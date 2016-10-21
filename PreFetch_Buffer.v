@@ -24,10 +24,10 @@ module PrefetchBuffer(	input 			clk, 	// System Clock
 	begin
 		if(wp_ === 1)
 		begin 
-			inst		= inst1;
-			inst_mem 	= inst2;
+			inst		= inst1; //Greg said these need to be non-blocking <=
+			inst_mem 	= inst2; //Greg said these need to be non-blocking <=
 		end
 		else
-			inst	= inst_mem;
+			inst	= inst_mem; //Greg said these need to be non-blocking <=
 	end
 endmodule
