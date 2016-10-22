@@ -19,6 +19,7 @@ module Stage1( input 			clk,
 		input[2:0]		funct_in,	// function code
 		input[2:0]		ALUfunct_in,	// ALU function Code
 		input			jr_in,		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
+	        input[31:0]		PC_in,
 
 		output reg[15:0]	reg1data_out,	// Register 1 data	
 		       			reg2data_out,	// Register 2 data	
@@ -27,7 +28,8 @@ module Stage1( input 			clk,
 		output reg[4:0]		boffset_out,	// Branch Offset
 		output reg[2:0]		funct_out,	// function code
 		output reg[2:0]		ALUfunct_out,	// ALU function Code
-		output reg		jr_out		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
+		output reg		jr_out,		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
+	        output reg[31:0]	PC_out
 	  );
 
 	always @(posedge clk) //non blocking statements...
@@ -40,5 +42,6 @@ module Stage1( input 			clk,
 		funct_out    <= funct_in;
 		ALUfunct_out <= ALUfunct_in;
 		jr_out 	     <= jr_in;
+		PC_out	     <= PC_in;
 	end
 endmodule
