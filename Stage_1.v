@@ -30,15 +30,15 @@ module Stage1( input 			clk,
 		output reg		jr_out		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
 	  );
 
-	always @(posedge clk)
+	always @(posedge clk) //non blocking statements...
 	begin
-		reg1data_out = reg1data_in;
-		reg2data_out = reg2data_in;
-		jtarget_out  = jtarget_in;
-		memaddr_out  = memaddr_in;
-		boffset_out  = boffset_in;
-		funct_out    = funct_in;
-		ALUfunct_out = ALUfunct_in;
-		jr_out 	     = jr_in;
+		reg1data_out <= reg1data_in;
+		reg2data_out <= reg2data_in;
+		jtarget_out  <= jtarget_in;
+		memaddr_out  <= memaddr_in;
+		boffset_out  <= boffset_in;
+		funct_out    <= funct_in;
+		ALUfunct_out <= ALUfunct_in;
+		jr_out 	     <= jr_in;
 	end
 endmodule
