@@ -8,7 +8,7 @@
 *	
 */
 
-module PCNIMUX(	input[31:0]		PC_in,  	// Same Program Count
+module PCMUX(	input[31:0]		PC_in,  	// Same Program Count
 		input[31:0]		PC_NI,		// Program Counter from Branch Selection
 		input			stall_flg,	// Stall Flag
 		output reg[31:0]	PC_out		// Next Instruction Program Counter	
