@@ -15,8 +15,8 @@ module StallUnit(	input		clk,	// System Clock
 			input[2:0]	rs1,	// register source 1
 					rs2,	// register source 2
 					rd,	// register destination
-			input[63:0]	pc_old,	// program counter in
-			output reg[63:0]	pc_new,	// program counter out
+			input[31:0]	pc_old,	// program counter in
+			output reg[31:0]	pc_new,	// program counter out
 			output reg		stall_flg // Flag set high when stall required
 		);
 	reg[2:0] rd_last;

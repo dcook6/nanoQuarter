@@ -9,7 +9,7 @@
 */
 
 module PCMUX(	input[31:0]		PC_in,  	// Same Program Count
-		input[31:0]		PC_NI,		// Program Counter from Branch Selection
+		input[31:0]		PCNI,		// Program Counter from Branch Selection
 		input			stall_flg,	// Stall Flag
 		output reg[31:0]	PC_out		// Next Instruction Program Counter	
 	  );
@@ -19,6 +19,6 @@ module PCMUX(	input[31:0]		PC_in,  	// Same Program Count
 		if (stall_flg == 1)
 			PC_out = PC_in;
 		else
-			PC_out = PC_NI;
+			PC_out = PCNI;
 	end
 endmodule

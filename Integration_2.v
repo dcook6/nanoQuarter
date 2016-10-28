@@ -8,7 +8,10 @@
 *
 *
 */
-
+`include "Jump_Calc.v"
+`include "branch_add.v"
+`include "PC_NI_MUX.v"
+`include "ALU.v"
 module Integration2( 	input 			clk,
 			 			rst,
 
@@ -20,38 +23,38 @@ module Integration2( 	input 			clk,
 			input[2:0]		funct_in,	// function code
 			input[2:0]		ALUfunct_in,	// ALU function Code
 			input[1:0]		op_in,		// Operation type
+						shamt_in,	// Shift Amount in
 			input			bne_in,		// Branch Flag 
 			input			jr_in,		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
-			input[31:0]		PC_in		// Program Counter from Pipeline
+			input[31:0]		PC_in,		// Program Counter from Pipeline
+
+			input[15:0]		memdata		// for testing
 	  );
 
-	reg[15:0] jaddr; 	// Address to Jump with 
-	reg[31:0] bsel;	 	// Address from the Branch Increase
-	reg[31:0] PCNI;	 	// Next Program Counter
-	reg[15:0] memedata;	// Data from memory address
-	reg[15:0] ALUout;	// Data from the ALU
+	wire[15:0] jaddr; 	// Address to Jump with 
+	wire[31:0] bsel;	// Address from the Branch Increase
+	wire[31:0] PCNI;	// Next Program Counter
+	wire[15:0] memedata;	// Data from memory address
+	wire[15:0] ALUout;	// Data from the ALU
+	wire[31:0] PC_n;
 
-	initial
-	begin
-		JumpCalc	JC(	.reg1data(reg1data_in),	.jtarget(jtarget_in),
-					.funct(funct_in),	.jaddr(jaddr)
-				  );
+	JumpCalc	JC(	.reg1data(reg1data_in),	.jtarget(jtarget_in),
+				.funct(funct_in),	.jaddr(jaddr)
+			  );
 
-		BrancAdd	BA(	.boffset_in(boff),	.PC_n(PC_n),
-					.bne(bne_in),		.bsel(bsel)
-				  );
+	BranchAdd	BA(	.boff(boffset_in),	.PC_n(PC_n),
+				.bne(bne_in),		.bsel(bsel)
+			  );
 
-		PCNIMUX		PM(	.jaddr(jaddr),		.bsel(bsel),
-					.jmp(jmp),		.PCNI(PCNI)
-				  );
+	PCNIMUX		PM(	.jaddr(jaddr),		.bsel(bsel),
+				.jmp(jmp),		.PCNI(PCNI)
+			  );
 
-		ALU		A(	.op(op_in),		.memdata(memdata),
-					.funct(funct_in),	.shamt(shamt_int),
-					.reg1data(reg1data_in), .reg2data(reg2data_in),
-					.ALUout(ALUout)
-				);
+	ALU		A(	.op(op_in),		.memdata(memdata),
+				.funct(funct_in),	.shamt(shamt_in),
+				.reg1data(reg1data_in), .reg2data(reg2data_in),
+				.ALUout(ALUout)
+			);
 
 						
-
-	end
 endmodule

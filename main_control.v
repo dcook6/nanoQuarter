@@ -35,12 +35,15 @@ module MainControl( 	input	   stall_flg,
 			rType:
 				jmp_flg = 0; // have to do something I guess...
 			iType:
+				if (funct >= rdWrtJnct) 
 				begin
-					if (funct >= rdWrtJnct) memRd_flg = 0; memWrt_flg = 1;
+					memRd_flg = 0; 
+					memWrt_flg = 1;
 				end
-			
-				begin
-					if (funct <  rdWrtJnct) memRd_flg = 1; memWrt_flg = 0;
+				else
+				begin	
+					memRd_flg = 1; 
+					memWrt_flg = 0;
 				end
 			jType:
 				jmp_flg = 1;
