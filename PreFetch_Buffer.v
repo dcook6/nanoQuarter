@@ -13,7 +13,7 @@ module PrefetchBuffer(	input 			clk, 	// System Clock
 						rst, 	// System Reset
 			input[15:0]		inst1,	// Instruction 1
 			input[15:0]		inst2,	// Instruction 2
-			input			wp_,	// Write Protect Bar
+			input			write,	// Write Protect Bar
 
 			output reg[15:0]	inst	// function	
 	  );
@@ -22,7 +22,7 @@ module PrefetchBuffer(	input 			clk, 	// System Clock
 	
 	always @(posedge clk)
 	begin
-		if(wp_ === 1)
+		if(write === 1)
 		begin 
 			inst		<= inst1;
 			inst_mem 	<= inst2;
