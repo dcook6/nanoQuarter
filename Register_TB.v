@@ -10,7 +10,7 @@
 `include "registers.v"
 module Reg_TB();
 
-	reg 		clk, rst, wp_;
+	reg 		clk, rst, write;
 	reg[2:0]    rs1, rs2, rd;
 	reg[15:0]   data_in;
 	
@@ -19,7 +19,7 @@ module Reg_TB();
 	
 
 	Registers test(	.clk(clk), .rst(rst), .rs1(rs1), .rs2(rs2), .rd(rd), 
-	.data_in(data_in), .wp_(wp_), .reg1data(reg1data), .reg2data(reg2data));
+		       .data_in(data_in), .write(write), .reg1data(reg1data), .reg2data(reg2data));
 
 
 	initial begin
