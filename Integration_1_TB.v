@@ -34,7 +34,8 @@ module Integration1_TB();
 	reg[4:0] error_count;
 	reg[255:0] message;
 
-	reg wp_;
+	reg 		wp_;
+	reg[15:0]	mem_data;
 
 	Integration1 test(.clk(clk),
 			.rst(rst),
@@ -54,6 +55,7 @@ module Integration1_TB();
 		      	.ALU_func(ALU_func),
 			.iVal(iVal),
 			
+			.mem_data(mem_data),
 			.wp_(wp_)	
 		);
 
@@ -71,7 +73,7 @@ module Integration1_TB();
 		// Startup Latency of 2 clock cycles
 		#5	wp_ = 0; message = "Line __ LW";
 			check_Prefetch(exInst[15:0], message);
-			$display("Instruction Actual: %b\n", test.inst);	
+			check_MainControl( 1, 0, 0, 0, 0, message);
 
 		#5 	message = "Line __ LW";
 			check_Prefetch(exInst[31:0], message);
@@ -88,6 +90,8 @@ module Integration1_TB();
 		if (inst_wanted !== test.inst)
 		begin
 			error_count = error_count + 1;
+			$display("....................................................");
+			$display("Prefetch Error", );
 			$display("%s", message);
 			$display("Instruction Wanted: %b", inst_wanted);	
 			$display("Instruction Actual: %b\n", test.inst);	
@@ -104,11 +108,13 @@ module Integration1_TB();
 						jmp_flg_exp,
 						nop_flg_exp,
 				input[255:0] message);
-		if( 	{memRd_flg_exp, memWrt_flg_exp, brnch_flg_exp, jmp_flg_exp, nop_flg_exp} ===
+		if( 	{memRd_flg_exp, memWrt_flg_exp, brnch_flg_exp, jmp_flg_exp, nop_flg_exp} !==
 			{test.memRd_flg, test.memWrt_flg, test.brnch_flg, test.jmp_flg, test.nop_flg}
 		)
 		begin
 			error_count = error_count + 1;
+			$display("....................................................");
+			$display("Main Control Error", );
 			$display("%s", message);
 			$display("memRd_flg Wanted: %b", memRd_flg_exp);	
 			$display("memRd_flg Actual: %b", test.memRd_flg);	

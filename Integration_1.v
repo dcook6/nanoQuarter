@@ -8,13 +8,14 @@
 *
 *
 */
-`include"Prefetch_Buffer.v"
-`include"PC_MUX.v"
-`include"PC.v"
-`include"main_control.v"
-`include"Stall_Unit.v"
-`include"ALU_Control.v"
-`include"Stage_1.v"
+`include "Prefetch_Buffer.v"
+`include "PC_MUX.v"
+`include "PC.v"
+`include "main_control.v"
+`include "Stall_Unit.v"
+`include "ALU_Control.v"
+`include "Stage_1.v"
+`include "Registers.v"
 module Integration1( 	input 			clk,
 						rst,
 			input wire 		[31:0] exInst,
@@ -30,12 +31,13 @@ module Integration1( 	input 			clk,
 						memRead,
 				       		memWrite,
 						valid,
-		     	output reg [15:0] 	reg1data,	
+		     	output wire [15:0] 	reg1data,	
 						reg2data,
 		      	output reg [2:0] 	ALU_func,
 			output reg [6:0] 	iVal,
 
-			// Below Here should be internal	
+			// Below Here should be internal
+			input wire[15:0]	mem_data,	
 			input wire		wp_
 		
 		);
@@ -73,7 +75,17 @@ module Integration1( 	input 			clk,
 					.new_PC(PC_mux_out),		.PC_out(PC_out)
 				);
 
+	Registers Registers(		.clk(clk),
+					.rst(rst),
+					.rs1(inst[13:11]),
+					.rs2(inst[10:8]),
+					.rd(inst[7:5]),
+					.data_in(mem_data),
+					.reg1data(reg1data),
+					.reg2data(reg2data)
+				);
 
+	
 	MainControl MainControl(	.stall_flg(stall_flg),		.opcode(inst[15:14]),
 					.funct(inst[2:0]),		.jmp_flg(jmp_flg),
 					.brnch_flg(brnch_flg),		.nop_flg(nop_flg),
