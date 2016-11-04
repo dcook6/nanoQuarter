@@ -15,7 +15,9 @@
 `include"Stall_Unit.v"
 `include"ALU_Control.v"
 `include"Stage_1.v"
-module integration1( 	input wire 		[31:0] exInst,
+module Integration1( 	input 			clk,
+						rst,
+			input wire 		[31:0] exInst,
 						PCNI,
 			input wire		Mmuxout,
 						regWrite,
@@ -31,11 +33,16 @@ module integration1( 	input wire 		[31:0] exInst,
 		     	output reg [15:0] 	reg1data,	
 						reg2data,
 		      	output reg [2:0] 	ALU_func,
-			output reg [6:0] 	iVal);
+			output reg [6:0] 	iVal,
+
+			// Below Here should be internal	
+			input wire		wp_
+		
+		);
 
 	//prefetch module
 	wire [15:0] inst;				
-	wire wp_;
+	//wire wp_;
 
 	//pc and pc_mux module
 	wire [31:0] PC_mux_out;
@@ -55,10 +62,13 @@ module integration1( 	input wire 		[31:0] exInst,
 					.inst2(exInst[31:16]),     	.inst(inst)
 				);
 
-	PCMUX PCMUX(			.PC_in(PC_out), 		.PCNI(PCNI), 
-					.stall_flg(stall_flg), 		.PC_out(PC_mux_out)
-				);
+	// PCMUX
+	//  Stall flag High keeps PC at same Value
+	assign PC_mux_out = stall_flg ? PC : PCNI;
 
+	// PC
+	// On reset Set PC to 0
+	// Else step PC to next PC
 	PC PC1(				.clk(clk),			.rst(rst),
 					.new_PC(PC_mux_out),		.PC_out(PC_out)
 				);
@@ -80,19 +90,4 @@ module integration1( 	input wire 		[31:0] exInst,
 	ALUControl ALUControl(		.inst(inst),			.func(alu_funct),
 					.shamt(shamt),			.jr(jr)
 				);
-
-	// Do not need to declare stage 1 inside this integration
-	// Stage 1 will be separate integration module
-	// Lots of typing done though, so I don't want to delete it yet
-//	Stage1 Stage1(			.clk(clk),			.rst(rst),
-//					.jtarget_in(inst[10:3]),	.memaddr_in(inst[10:5]),
-//					.boffset_in(inst[7:3]),		.funct_in(inst[2:0]),
-//					.ALUfunct_in(alu_funct),	.jr_in(jump_flg),
-//					.PC_in(PC_out),			.reg1data_in(reg1data),
-//					.reg2data_in(reg2data),		.reg1data_out(reg1data_out),
-//					.reg2data_out(reg2data_out),	.jtarget_out(jtarget_out),
-//					.memaddr_out(memaddr_out),	.boffset_out(boffset_out),
-//					.funct_out(funct_out),		.ALUfunct_out(ALU_func),
-//					.jr_out(jr_out),		.PC_out(PC_out)
-//				);
 endmodule
