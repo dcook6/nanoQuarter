@@ -56,7 +56,7 @@ module Integration1_TB();
 			.iVal(iVal),
 			
 			.mem_data(mem_data),
-			  .write(write)	
+			 .write(write)	
 		);
 
 	initial begin

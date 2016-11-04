@@ -1,7 +1,8 @@
 /*testbench by bryanlee
-
+	Edited to work by Nathan Chinn
 */
 
+`include "ALU_Control.v"
 module ALUControl_TB();
 reg [15:0] inst;
 wire[2:0] func;
@@ -14,6 +15,8 @@ ALUControl ALUControl_testbench(.func(func),
 				.inst(inst));
 
 initial begin
+	$dumpfile("ALU_Control_TB.vcd");
+	$dumpvars(0, ALUControl_TB);
 	//initialize the instructions to be tested, one of each type
 
 	//r type - opcode 00, rSource r0 and r1, rDest r2, shift 0, function add 101

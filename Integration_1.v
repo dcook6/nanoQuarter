@@ -38,13 +38,13 @@ module Integration1( 	input 			clk,
 
 			// Below Here should be internal
 			input wire[15:0]	mem_data,	
-			input wire		wp_
+			input wire		write
 		
 		);
 
 	//prefetch module
 	wire [15:0] inst;				
-	//wire wp_;
+	//wire write;
 
 	//pc and pc_mux module
 	wire [31:0] PC_mux_out;
@@ -60,7 +60,7 @@ module Integration1( 	input 			clk,
 	wire [2:0] alu_funct; // alucontrol output function
 
 	PrefetchBuffer PrefetchBuffer(	.clk(clk),			.rst(rst),
-					.wp_(wp_),			.inst1(exInst[15:0]),
+					.write(write),			.inst1(exInst[15:0]),
 					.inst2(exInst[31:16]),     	.inst(inst)
 				);
 
@@ -95,8 +95,7 @@ module Integration1( 	input 			clk,
 	StallUnit StallUnit(		.clk(clk),			.rst(rst),
 					.opcode(inst[15:14]),		.rs1(inst[13:11]),
 					.rs2(inst[10:8]),		.rd(inst[7:5]),
-					.pc_old(PC_out),		.pc_new(PC_out),
-					.stall_flg(stall_flg)
+					.pc_old(PC_out),		.stall_flg(stall_flg)
 				);
 
 	ALUControl ALUControl(		.inst(inst),			.func(alu_funct),

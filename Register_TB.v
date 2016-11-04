@@ -1,5 +1,6 @@
 /*
 * 	Derek Cook
+* 	Edited to Work by Nathan Chinn
 * 	Minion CPU - NanoQuarter
 *
 *	Module:  Register TB
@@ -15,6 +16,8 @@ module Reg_TB();
 	reg[15:0]   data_in;
 	
 	wire[15:0] 	reg1data, reg2data; 
+
+	reg[4:0] error_count;
 
 	
 

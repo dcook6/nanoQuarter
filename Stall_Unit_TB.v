@@ -16,8 +16,7 @@ module StallUnit_TB();
 	reg[2:0]	rs1;	// register source 1
 	reg[2:0] 	rs2;	// register source 2
 	reg[2:0]   	rd;	// register destination
-	reg[63:0]	pc_old;	// program counter in
-	wire[63:0]	pc_new;	// program counter out
+	reg[31:0]	pc_old;	// program counter in
 	wire		stall_flg; // Flag set high when stall required
 
 	reg		stall_flg_test;
@@ -27,8 +26,7 @@ module StallUnit_TB();
 
 	StallUnit test (	.clk(clk),	.rst(rst),	.opcode(opcode),
 				.rs1(rs1),	.rs2(rs2),	.rd(rd),
-				.pc_old(pc_old), 		.pc_new(pc_new),
-				.stall_flg(stall_flg));
+				.pc_old(pc_old), 		.stall_flg(stall_flg));
 
 	initial begin
 		$dumpfile("StallUnit_TB.vcd");
