@@ -15,7 +15,7 @@ module PrefetchBuffer_TB();
 	reg 		clk, rst;
 	reg[15:0] 	inst1,
 			inst2;
-	reg 		wp_;
+	reg 		write;
 	wire [15:0] 	inst;
 
 
@@ -23,7 +23,7 @@ module PrefetchBuffer_TB();
 	reg[7:0]	error_count;
 	reg[255:0]	message;
 
-PrefetchBuffer test(	.inst(inst), 	.wp_(wp_), 
+	PrefetchBuffer test(	.inst(inst), 	.write(write), 
 			.inst1(inst1), 	.inst2(inst2), 
 			.clk(clk), 	.rst(rst)
 			);
@@ -32,29 +32,29 @@ PrefetchBuffer test(	.inst(inst), 	.wp_(wp_),
 		$dumpfile("PrefetchBuffer_TB.vcd");
 		$dumpvars(0, PrefetchBuffer_TB);
 		rst = 1;
-		clk = 0;	error_count = 0;	wp_ = 1'b0;
+		clk = 0;	error_count = 0;	write = 1'b0;
 
-		#5 	inst1 = 16'h0000; 	inst2 = 16'h0001; wp_ = 1'b1;
+		#5 	inst1 = 16'h0000; 	inst2 = 16'h0001; write = 1'b1;
 			inst_test = 16'h0000;	message = "Line 35: 0th (Start Data)";
 			#5 check_inst_out(inst_test, message);
 
-		#5 	inst1 = 16'hXXXX; 	inst2 = 16'hXXXX; wp_ = 1'b0;
+		#5 	inst1 = 16'hXXXX; 	inst2 = 16'hXXXX; write = 1'b0;
 			inst_test = 16'h0001;	message = "Line 42: 1st Inst out";
 			#5 check_inst_out(inst_test, message);
 
-		#5 	inst1 = 16'h0002; 	inst2 = 16'h0003; wp_ = 1'b1;
+		#5 	inst1 = 16'h0002; 	inst2 = 16'h0003; write = 1'b1;
 			inst_test = 16'h0002;	message = "Line 48: 2nd Inst out";
 			#5 check_inst_out(inst_test, message);
 
-		#5 	inst1 = 16'hXXXX; 	inst2 = 16'hXXXX; wp_ = 1'b0;
+		#5 	inst1 = 16'hXXXX; 	inst2 = 16'hXXXX; write = 1'b0;
 			inst_test = 16'h0003;	message = "Line 50: 3rd Inst out";
 			#5 check_inst_out(inst_test, message);
 
-		#5 	inst1 = 16'h0004; 	inst2 = 16'h0005; wp_ = 1'b1;
+		#5 	inst1 = 16'h0004; 	inst2 = 16'h0005; write = 1'b1;
 			inst_test = 16'h0004;	message = "Line 54: 4th Inst out";
 			#5 check_inst_out(inst_test, message);
 
-		#5 	inst1 = 16'h0008; 	inst2 = 16'h0009; wp_ = 1'b0;
+		#5 	inst1 = 16'h0008; 	inst2 = 16'h0009; write = 1'b0;
 			inst_test = 16'h0005;	message = "Line 58: 5th Inst out (last)";
 			#5 check_inst_out(inst_test, message);
 
