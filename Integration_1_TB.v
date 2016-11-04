@@ -34,7 +34,7 @@ module Integration1_TB();
 	reg[4:0] error_count;
 	reg[255:0] message;
 
-	reg 		wp_;
+	reg 		write;
 	reg[15:0]	mem_data;
 
 	Integration1 test(.clk(clk),
@@ -56,7 +56,7 @@ module Integration1_TB();
 			.iVal(iVal),
 			
 			.mem_data(mem_data),
-			.wp_(wp_)	
+			  .write(write)	
 		);
 
 	initial begin
@@ -64,14 +64,14 @@ module Integration1_TB();
 		$dumpvars(0, Integration1_TB);
 		error_count = 0;	clk = 0;	rst = 0;
 
-		$display("No Internal WP_"); error_count ++; wp_ = 0;
+		$display("No Internal WP_"); error_count ++; write = 0;
 
 		// LW r0, 0, 00
 		// LW r1, 1, 00
 		#5 	exInst = 32'b0100000000000000_0100000000100000;
-			wp_ = 1;	
+			write = 1;	
 		// Startup Latency of 2 clock cycles
-		#5	wp_ = 0; message = "Line __ LW";
+		#5	write = 0; message = "Line __ LW";
 			check_Prefetch(exInst[15:0], message);
 			check_MainControl( 1, 0, 0, 0, 0, message);
 
