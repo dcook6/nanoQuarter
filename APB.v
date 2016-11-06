@@ -1,69 +1,68 @@
-module apb_slave
-(
-  addrWidth = 8,
-  dataWidth = 32
+module APB
+#(
+  parameter ADDRWIDTH = 8,
+  parameter DATAWIDTH = 32
 )
 (
   input                        clk,
-  input                        rst_n,
-  input        [addrWidth-1:0] paddr,
+  input                        reset_N,
+  input        [ADDRWIDTH-1:0] paddr,
   input                        pwrite,
   input                        psel,
   input                        penable,
-  input        [dataWidth-1:0] pwdata,
-  output logic [dataWidth-1:0] prdata
-);
+  input        [DATAWIDTH-1:0] pwdata,
+  output reg      [DATAWIDTH-1:0] prdata);
 
-logic [dataWidth-1:0] mem [256];
+reg [31:0] memory; 
+reg [1:0] apb_st;
+reg [1:0] APB_SETUP = 0;
+reg [1:0] WRITE_ENABLE = 1;
+reg [1:0] READ_ENABLE = 2;
 
-logic [1:0] apb_st;
-const logic [1:0] SETUP = 0;
-const logic [1:0] W_ENABLE = 1;
-const logic [1:0] R_ENABLE = 2;
-
-// SETUP -> ENABLE
-always @(negedge rst_n or posedge clk) begin
-  if (rst_n == 0) begin
+// APB_SETUP -> ENABLE
+always @(negedge reset_N or posedge clk) begin
+  if (reset_N == 0) begin // Reset everything to 0
     apb_st <= 0;
-    prdata <= 0;
+	prdata <= 0;
   end
 
   else begin
     case (apb_st)
-      SETUP : begin
-        // clear the prdata
-        prdata <= 0;
+      APB_SETUP : begin // Setup APB
 
-        // Move to ENABLE when the psel is asserted
+		 // clear the prdata (Data Read)
+        prdata <= 0;
+		
+        // Enable Write or Read
         if (psel && !penable) begin
           if (pwrite) begin
-            apb_st <= W_ENABLE;
+            apb_st <= WRITE_ENABLE; // Enable Write
           end
 
           else begin
-            apb_st <= R_ENABLE;
+            apb_st <= READ_ENABLE; // Enable Read 
           end
         end
       end
 
-      W_ENABLE : begin
-        // write pwdata to memory
+      WRITE_ENABLE : begin
+        // Write pwdata to memory
         if (psel && penable && pwrite) begin
-          mem[paddr] <= pwdata;
+          memory[paddr] <= pwdata;
         end
 
-        // return to SETUP
-        apb_st <= SETUP;
+        // return to APB_SETUP
+        apb_st <= APB_SETUP;
       end
 
-      R_ENABLE : begin
+      READ_ENABLE : begin
         // read prdata from memory
         if (psel && penable && !pwrite) begin
-          prdata <= mem[paddr];
+          prdata <= memory[paddr];
         end
 
-        // return to SETUP
-        apb_st <= SETUP;
+        // return to APB_SETUP
+        apb_st <= APB_SETUP;
       end
     endcase
   end
