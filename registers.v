@@ -35,6 +35,18 @@ module Registers(	input 			clk,	 // System Clock
 			rd_last = rd;
 		end
 
+		always @ (posedge rst)
+		begin
+			registers[0] = 16'b0000_0000_0000_0000;
+			registers[1] = 16'b0000_0000_0000_0000;
+			registers[2] = 16'b0000_0000_0000_0000;
+			registers[3] = 16'b0000_0000_0000_0000;
+			registers[4] = 16'b0000_0000_0000_0000;
+			registers[5] = 16'b0000_0000_0000_0000;
+			registers[6] = 16'b0000_0000_0000_0000;
+			registers[7] = 16'b0000_0000_0000_0000;
+		end
+
 
 endmodule
 			

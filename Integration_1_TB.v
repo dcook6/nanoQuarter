@@ -74,6 +74,8 @@ module Integration1_TB();
 		#5	write = 0; message = "Line __ LW";
 			check_Prefetch(exInst[15:0], message);
 			check_MainControl( 1, 0, 0, 0, 0, message);
+			$display("Reg1data: %b", test.reg1data);
+			$display("Reg2data: %b", test.reg2data);
 
 		#5 	message = "Line __ LW";
 			check_Prefetch(exInst[31:0], message);
