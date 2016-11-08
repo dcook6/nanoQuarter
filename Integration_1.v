@@ -38,7 +38,8 @@ module Integration1( 	input 			clk,
 
 			// Below Here should be internal
 			input wire[15:0]	mem_data,	
-			input wire		write
+			input wire		write,
+			input wire		write_reg
 		
 		);
 
@@ -77,6 +78,7 @@ module Integration1( 	input 			clk,
 
 	Registers Registers(		.clk(clk),
 					.rst(rst),
+					.write_reg(write_reg),
 					.rs1(inst[13:11]),
 					.rs2(inst[10:8]),
 					.rd(inst[7:5]),

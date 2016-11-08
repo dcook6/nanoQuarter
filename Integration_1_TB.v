@@ -34,6 +34,7 @@ module Integration1_TB();
 	reg[4:0] error_count;
 	reg[255:0] message;
 
+	reg 		write_reg;
 	reg 		write;
 	reg[15:0]	mem_data;
 
@@ -56,15 +57,19 @@ module Integration1_TB();
 			.iVal(iVal),
 			
 			.mem_data(mem_data),
-			 .write(write)	
+			.write_reg(write_reg),
+			.write(write)	
 		);
 
 	initial begin
 		$dumpfile("Integration_1_TB.vcd");
 		$dumpvars(0, Integration1_TB);
 		error_count = 0;	clk = 0;	rst = 0;
+		write_reg = 0;
 
-		$display("No Internal WP_"); error_count ++; write = 0;
+		$display("No Internal Write Flag"); error_count ++; write = 0;
+		#5 rst = 1;
+		#5 rst = 0;
 
 		// LW r0, 0, 00
 		// LW r1, 1, 00
@@ -74,11 +79,35 @@ module Integration1_TB();
 		#5	write = 0; message = "Line __ LW";
 			check_Prefetch(exInst[15:0], message);
 			check_MainControl( 1, 0, 0, 0, 0, message);
-			$display("Reg1data: %b", test.reg1data);
-			$display("Reg2data: %b", test.reg2data);
-
+		// ADD r0, r1, r2, 00
+		// Nada atm
 		#5 	message = "Line __ LW";
-			check_Prefetch(exInst[31:0], message);
+			exInst = 32'b1111111111111111_0000000001000000;
+			write = 1;	
+			write_reg = 1'b1;	mem_data = 2; // Register should be loaded
+			check_Prefetch(16'b0100000000100000, message);
+			check_MainControl( 1, 0, 0, 0, 0, message);
+			$display("RDLast: %b", test.Registers.rd_last);
+			$display("RD: %b", test.Registers.rd);
+
+
+			// should trigger stall
+		#5	write = 0; message = "Line __ Add 0,1 put r2 - stall";
+			write_reg = 1'b1;	mem_data = 1; // Register should be loaded
+			check_Prefetch(exInst[15:0], message);
+			check_MainControl( 0, 0, 0, 0, 0, message);
+
+		#5	write = 0; message = "Line __ Add 0,1 put r2";
+			check_Prefetch(exInst[15:0], message);
+			check_MainControl( 0, 0, 0, 0, 0, message);
+			check_RegisterData(0, 1, message);
+			$display("RDLast: %b", test.Registers.rd_last);
+			$display("RD: %b", test.Registers.rd);
+			$display("Stall: %b", test.StallUnit.stall_flg);
+
+			
+
+
 
 
 		$display("Finished Integration_1_TB Test Bench Error Count: %d", error_count);	
@@ -131,5 +160,24 @@ module Integration1_TB();
 			$display("....................................................");
 		end	
 	endtask
+
+	task check_RegisterData( input[15:0]	reg1data_exp,
+						reg2data_exp,
+				 input[255:0]	message);
+		if( (reg1data_exp != test.reg1data) || (reg2data_exp != test.reg2data) )
+		begin
+			error_count = error_count + 1;
+			$display("....................................................");
+			$display("Register Error");
+			$display("register1data expected: %b", reg1data_exp);
+			$display("register1data actual  : %b", test.reg1data);
+			$display("register2data expected: %b", reg2data_exp);
+			$display("register2data actual  : %b", test.reg2data);
+			$display("....................................................");
+			
+		end
+	
+	 endtask
+
 
 endmodule
