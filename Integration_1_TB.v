@@ -67,43 +67,51 @@ module Integration1_TB();
 		error_count = 0;	clk = 0;	rst = 0;
 		write_reg = 0;
 
-		$display("No Internal Write Flag"); error_count ++; write = 0;
+		$display("No Internal Write Flag"); error_count = error_count+1 ; write = 0;
+		$display("Stall is broken"); error_count = error_count+1; 
 		#5 rst = 1;
 		#5 rst = 0;
 
 		// LW r0, 0, 00
 		// LW r1, 1, 00
-		#5 	exInst = 32'b0100000000000000_0100000000100000;
+		#10 	exInst = 32'b0100000000000000_0100000000100000;
 			write = 1;	
 		// Startup Latency of 2 clock cycles
-		#5	write = 0; message = "Line __ LW";
+		#10	write = 0; message = "Line __ LW r0";
 			check_Prefetch(exInst[15:0], message);
 			check_MainControl( 1, 0, 0, 0, 0, message);
 		// ADD r0, r1, r2, 00
+		// ADD r0, r1, r2, 00
 		// Nada atm
-		#5 	message = "Line __ LW";
-			exInst = 32'b1111111111111111_0000000001000000;
+		#10 	message = "Line __ LW r1";
+			exInst = 32'b0000000001000000_0000000001000000;
 			write = 1;	
-			write_reg = 1'b1;	mem_data = 2; // Register should be loaded
-			check_Prefetch(16'b0100000000100000, message);
+			check_Prefetch(16'b0100000000000000, message);
 			check_MainControl( 1, 0, 0, 0, 0, message);
-			$display("RDLast: %b", test.Registers.rd_last);
-			$display("RD: %b", test.Registers.rd);
-
 
 			// should trigger stall
-		#5	write = 0; message = "Line __ Add 0,1 put r2 - stall";
+		#10	write = 0; message = "Line __ Add 0,1 put r2 - stall";
 			write_reg = 1'b1;	mem_data = 1; // Register should be loaded
 			check_Prefetch(exInst[15:0], message);
-			check_MainControl( 0, 0, 0, 0, 0, message);
+			check_MainControl( 0, 0, 0, 0, 1, message);
 
-		#5	write = 0; message = "Line __ Add 0,1 put r2";
-			check_Prefetch(exInst[15:0], message);
+		// NAND r7, r2, r3, 01
+		// XOR  r5, r6, r7, 11
+		#10	write = 1; message = "Line __ Add 0,1 put r2";
+			write_reg = 0;
+			exInst = 32'b0010111011111000_0011101001101000;
+			check_Prefetch(16'b0000000001000000, message);
 			check_MainControl( 0, 0, 0, 0, 0, message);
-			check_RegisterData(0, 1, message);
-			$display("RDLast: %b", test.Registers.rd_last);
-			$display("RD: %b", test.Registers.rd);
-			$display("Stall: %b", test.StallUnit.stall_flg);
+			check_RegisterData(0, 0, message);
+
+		#10	write = 0; message = "Line __ NAND 7,2 put r3 sh 01";
+			check_Prefetch(exInst[15:0], message);
+			check_RegisterData(0, 0, message);
+			write_reg = 1; mem_data = 16'hFFFF;
+
+		#10	write = 0; message = "Line __ XOR 5,6 put r7 sh 11";
+			check_Prefetch(16'b0010111011111000, message);
+			check_RegisterData(0, 0, message);
 
 			
 

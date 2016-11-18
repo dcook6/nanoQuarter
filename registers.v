@@ -22,7 +22,7 @@ module Registers(	input 			clk,	 // System Clock
 						reg2data
 		);
 
-		reg [2:0] registers[15:0]; // 8 16 bit registers
+		reg [15:0] registers[7:0]; // 8 16 bit registers
 		reg [2:0] rd_last; // last destination register
 		
 		integer index = 0;
@@ -31,7 +31,9 @@ module Registers(	input 			clk,	 // System Clock
 		always @ (posedge clk)
 		begin
 			if (write_reg == 1)
+			begin
 				registers[rd_last] <= data_in;
+			end
 			rd_last <= rd;
 
 			reg1data <= registers[rs1]; // pass through

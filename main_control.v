@@ -23,7 +23,6 @@ module MainControl( 	input	   stall_flg,
 
 	parameter rdWrtJnct = 3'b010;
 
-
 	always @ (*)
 	begin
 		jmp_flg   = 0;	brnch_flg  = 0;	

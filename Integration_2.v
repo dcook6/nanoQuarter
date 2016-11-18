@@ -28,7 +28,13 @@ module Integration2( 	input 			clk,
 			input			jr_in,		// jump register?  - as of 9/8/16 I have forgot what this is supposed to do...
 			input[31:0]		PC_in,		// Program Counter from Pipeline
 
+
+			output[15:0]		mmuxout,	// data from either memory or ALU
+			output			regwrite,
+			output[31:0]		PC_out,
+
 			input[15:0]		memdata		// for testing
+
 	  );
 
 	wire[15:0] jaddr; 	// Address to Jump with 
@@ -37,6 +43,8 @@ module Integration2( 	input 			clk,
 	wire[15:0] memedata;	// Data from memory address
 	wire[15:0] ALUout;	// Data from the ALU
 	wire[31:0] PC_n;
+
+	assign regwrite = (op_in === 2'b00)? 1'b1:1'b0;	// if R-type, then regwrite high
 
 	JumpCalc	JC(	.reg1data(reg1data_in),	.jtarget(jtarget_in),
 				.funct(funct_in),	.jaddr(jaddr)
