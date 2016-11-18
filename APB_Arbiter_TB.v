@@ -1,28 +1,23 @@
-/*
-* 	Derek Cook
-* 	Edited to work by Nathan Chinn
-* 	Minion CPU - NanoQuarter
-*
-*	Module:  Branch Adder TB
-*	Inputs:  boff, PC_n, bne
-*	Outputs: bsel
-*
-*/
 `include "APB_Arbiter.v"
 module APB_Arbiter_TB();
-	
+	reg  Q;
 	reg  clk;
+	reg CEN;
 	reg  reset_N;
 	reg [15:0] paddr;
 	reg     pwrite;
 	reg     psel;
 	reg     penable;
 	reg     [15:0] pwdata;
+	reg     [2:0]  EMA;
+	reg     GWEN;
+	reg 	RETN;
+	wire    WRITE_FLAG;
 	wire    [15:0] prdata;
 	
-	APB_Arbiter APB_Arbiter(.clk(clk), .reset_N(reset_N), .paddr(paddr), .pwrite(pwrite),
-							.psel(psel), .penable(penable), .pwdata(pwdata), .prdata(prdata));
-
+	APB_Arbiter APB_Arbiter(.Q(Q), .clk(clk), .CEN(CEN), .reset_N(reset_N), .paddr(paddr),
+							.pwrite(pwrite), .psel(psel), .penable(penable), .pwdata(pwdata),
+							.EMA(EMA), .GWEN(GWEN), .RETN(RETN), .WRITE_FLAG(WRITE_FLAG), .prdata(prdata));
 
 	 initial begin
 		 clk = 1'b0;
