@@ -10,8 +10,9 @@ module APB_Adapter_TB();
 	reg     [15:0] pwdata;
 	wire    [15:0] prdata;
 	
-	APB_Adapter APB_Adapter(.clk(clk), .reset_N(reset_N), .paddr(paddr), .pwrite(pwrite),
-							.psel(psel), .penable(penable), .pwdata(pwdata), .prdata(prdata));
+	APB_Adapter APB_Adapter(.Q(Q), .clk(clk), .CEN(CEN), .reset_N(reset_N), .paddr(paddr),
+							.pwrite(pwrite), .psel(psel), .penable(penable), .pwdata(pwdata),
+							.EMA(EMA), .GWEN(GWEN), .RETN(RETN), .WRITE_FLAG(WRITE_FLAG), .prdata(prdata));
 
 
 	 initial begin
