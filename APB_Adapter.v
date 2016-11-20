@@ -16,6 +16,7 @@ module APB_Adapter
   input                  [2:0] EMA,
   input                        GWEN,
   input                        RETN,
+  output reg                   WRITE_FLAG,
   output reg      [DATAWIDTH-1:0] prdata);
 
 reg [31:0] memory; 
@@ -31,6 +32,7 @@ always @(negedge reset_N or posedge clk) begin
   if (reset_N == 0) begin // Reset everything to 0
     apb_st <= 0;
 	prdata <= 0;
+	WRITE_FLAG <= 0;
   end
 
   else begin
@@ -39,15 +41,18 @@ always @(negedge reset_N or posedge clk) begin
 
 		 // clear the prdata (Data Read)
         prdata <= 0;
+		WRITE_FLAG <= 0;
 		
         // Enable Write or Read
         if (psel && !penable) begin
           if (pwrite) begin
             apb_st <= WRITE_ENABLE; // Enable Write
+			WRITE_FLAG <= 1;
           end
 
           else begin
             apb_st <= READ_ENABLE; // Enable Read 
+			WRITE_FLAG <= 0;
           end
         end
       end
@@ -67,7 +72,7 @@ always @(negedge reset_N or posedge clk) begin
         if (psel && penable && !pwrite) begin
           prdata <= memory[paddr];
         end
-
+		
         // return to APB_SETUP
         apb_st <= APB_SETUP;
       end
